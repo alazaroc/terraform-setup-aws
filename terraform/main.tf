@@ -4,7 +4,7 @@ provider "aws" {
 
 # S3 Bucket for Terraform State
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "terraform-state-bucket-123456789" # TODO: Change this to a globally unique name
+  bucket = "terraform-state-bucket-xxxxxx" # TODO: Change this to a globally unique name (you can replace xxxxxx with your account number)
 }
 
 resource "aws_s3_bucket_ownership_controls" "terraform_state" {

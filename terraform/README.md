@@ -51,9 +51,9 @@ Add the following backend configuration in your Terraform projects:
 ```hcl
 terraform {
     backend "s3" {
-        bucket         = "terraform-state-bucket-123456789"  # Update with your bucket name
-        key            = "path/to/my/terraform.tfstate"     # Change the key to organize states
-        region         = "eu-west-1"                        # Update with your region
+        bucket         = "terraform-state-bucket-xxxxxx"  # Update with your bucket name (you can replace xxxxxx with your account number)
+        key            = "path/to/my/terraform.tfstate"   # Change the key to organize states
+        region         = "eu-west-1"                      # Update with your region
         dynamodb_table = "terraform-locks"
         encrypt        = true
     }
