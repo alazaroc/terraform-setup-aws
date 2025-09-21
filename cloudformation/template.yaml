@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: AWS S3 bucket and DynamoDB table for Terraform backend state.
+
+Parameters:
+  BucketName:
+    Type: String
+    Default: my-terraform-state-bucket-unique-name
+    Description: The name for the S3 bucket to store the Terraform state file. Must be globally unique.
+  TableName:
+    Type: String
+    Default: terraform-state-lock
+    Description: The name for the DynamoDB table for state locking.
+
+Resources:
+  TerraformStateBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+      VersioningConfiguration:
+        Status: Enabled
+      Tags:
+        - Key: Name
+          Value: !Ref BucketName
+
+  TerraformStateLockTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref TableName
+      AttributeDefinitions:
+        - AttributeName: LockID
+          AttributeType: S
+      KeySchema:
+        - AttributeName: LockID
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+Outputs:
+  BucketName:
+    Description: The name of the S3 bucket created for Terraform state.
+    Value: !Ref TerraformStateBucket
+  TableName:
+    Description: The name of the DynamoDB table created for state locking.
+    Value: !Ref TerraformStateLockTable
